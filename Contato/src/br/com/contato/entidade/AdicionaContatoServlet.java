@@ -56,10 +56,21 @@ public class AdicionaContatoServlet extends HttpServlet {
 				+ contato.getDataNascimento().get(Calendar.DAY_OF_MONTH) + "/"
 				+ (contato.getDataNascimento().get(Calendar.MONTH) + 1) + "/"
 				+ contato.getDataNascimento().get(Calendar.YEAR) + "<br/>");
+		out.println("<br/>");
+		
+		//armazena no banco de dados:
+		int contatoInserido;
+		contatoInserido = contato.inserirContato(contato);
+		if(contatoInserido != -1){
+			out.println("<p style='color:green;'>Contato inserido com sucesso no Banco de Dados!</p>");			
+		}else{
+			out.println("<p style='color:red;'>Falha ao tentar inserir contato no Banco de Dados!</p>");
+		}
+		
+		//fim do HTML
 		out.println("</body>");
 		out.println("</html>");
 		
-		//armazena no banco de dados:
 		
 
 	}
