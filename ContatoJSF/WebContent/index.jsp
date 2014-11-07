@@ -1,0 +1,1 @@
+<jsp:forward page="/paginas/gerenciar-contatos.jsf"/>
