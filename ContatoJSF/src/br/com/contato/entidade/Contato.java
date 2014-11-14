@@ -2,7 +2,7 @@ package br.com.contato.entidade;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class Contato {
@@ -11,7 +11,7 @@ public class Contato {
 	private String nome;
 	private String email;
 	private String endereco;
-	private Calendar dataNascimento;
+	private Date dataNascimento;
 	
 	ContatoDAO dao;
 	
@@ -64,10 +64,10 @@ public class Contato {
 	public void setEndereco(String endereco) {
 		this.endereco = endereco;
 	}
-	public Calendar getDataNascimento() {
+	public Date getDataNascimento() {
 		return dataNascimento;
 	}
-	public void setDataNascimento(Calendar dataNascimento) {
+	public void setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
 	public String getCodContato() {

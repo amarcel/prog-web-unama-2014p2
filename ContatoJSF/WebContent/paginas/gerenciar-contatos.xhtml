@@ -17,7 +17,7 @@
 	
 		<p:messages id="avisos" showDetail="true" autoUpdate="true" closable="true" />
 
-		<p:panelGrid header="Contatos:" columns="2">
+		<p:panelGrid id="pgGerenciaContato" header="Contatos:" columns="2">
 			<p:outputLabel value="Nome:" />
 			<p:inputText value="#{contatoController.contato.nome}" />
 			<p:outputLabel value="E-mail:" />
@@ -38,9 +38,9 @@
 	
 	</h:form>
 
-	<p:panel header="Lista de contatos cadastrados:">
-		<p:dataTable value="#{contatoController.listaContatos}" 
-			var="contato">
+	<p:panel id="pnListaContatos" header="Lista de contatos cadastrados:">
+		<p:dataTable id="tabListaContatos" 
+			value="#{contatoController.listaContatos}" var="contato">
 
 			<p:column headerText="Cód.">
 				<h:outputText value="#{contato.codContato}" />
@@ -58,8 +58,19 @@
 				<h:outputText value="#{contato.endereco}" />
 			</p:column>
 			
-			<p:column headerText="Data Nascimento">
-				<h:outputText value="#{contato.dataNascimento}" />
+			<p:column headerText="Data Nascimento" >
+				<h:outputText value="#{contato.dataNascimento}" >
+					<f:convertDateTime pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</p:column>
+			
+			<p:column headerText="Ações">
+				<p:commandButton value="Editar" icon="ui-icon-pencil" update=":frmContato:pgGerenciaContato"
+					actionListener="#{contatoController.acaoTabEditar(contato)}"
+					  />
+				<p:commandButton value="Remover" icon="ui-icon-trash" 
+					actionListener="#{contatoController.acaoTabRemover(contato)}"
+					 />
 			</p:column>
 
 		</p:dataTable>

@@ -4,7 +4,6 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -33,7 +32,8 @@ public class ContatoDAO {
 			ps.setString(1, c.getNome());
 			ps.setString(2, c.getEmail());
 			ps.setString(3, c.getEndereco());
-			ps.setDate(4, new Date(c.getDataNascimento().getInstance().getTimeInMillis()));
+			
+			ps.setDate(4, new java.sql.Date (c.getDataNascimento().getTime() ));
 			
 			return ps.executeUpdate();
 
@@ -62,10 +62,11 @@ public class ContatoDAO {
 				Contato contato = new Contato();
 				
 				contato.setCodContato(resultado.getString("cliente_id"));
-				contato.setDataNascimento(converterData( resultado.getString("data_nascimento")) );
 				contato.setNome(resultado.getString("nome"));
 				contato.setEmail(resultado.getString("email"));
 				contato.setEndereco(resultado.getString("endereco"));
+				
+				contato.setDataNascimento( new java.util.Date( resultado.getDate("data_nascimento").getTime() ));
 				
 				listaContatos.add(contato);
 			}
@@ -79,6 +80,7 @@ public class ContatoDAO {
 		
 	}
 	
+	/*
 	private Calendar converterData(String dataString){
 		try {
 			Date date = (Date) new SimpleDateFormat("dd/MM/yyyy").parse(dataString);
@@ -91,5 +93,6 @@ public class ContatoDAO {
 		}
 		
 	}
+	*/
 
 }

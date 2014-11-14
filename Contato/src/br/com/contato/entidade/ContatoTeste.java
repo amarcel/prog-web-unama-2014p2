@@ -13,9 +13,9 @@ public class ContatoTeste {
 	@Test
 	public void deveInserirContato() {
 		Contato c = new Contato();
-		c.setNome("Kelly Key");
-		c.setEmail("kkey@gmail.com");
-		c.setEndereco("Rua ABC");
+		c.setNome("Carla Perez");
+		c.setEmail("cperez@gmail.com");
+		c.setEndereco("Rua XYZ");
 		c.setDataNascimento(deveConverterDataNascimento("10/10/1990"));
 
 		ContatoDAO dao = new ContatoDAO();

@@ -13,9 +13,9 @@ public class ContatoTeste {
 	@Test
 	public void deveInserirContato() {
 		Contato c = new Contato();
-		c.setNome("Kelly Key");
-		c.setEmail("kkey@gmail.com");
-		c.setEndereco("Rua ABC");
+		c.setNome("Silvana Silva");
+		c.setEmail("ssilva@gmail.com");
+		c.setEndereco("Rua QWERTY");
 		c.setDataNascimento(deveConverterDataNascimento("10/10/1990"));
 
 		ContatoDAO dao = new ContatoDAO();
@@ -30,15 +30,13 @@ public class ContatoTeste {
 
 	}
 
-	private Calendar deveConverterDataNascimento(String dataString) {
+	private Date deveConverterDataNascimento(String dataString) {
 		Calendar dataNascimento = null;
 
 		// fazendo a conversão da data
 		try {
 			Date date = new SimpleDateFormat("dd/MM/yyyy").parse(dataString);
-			dataNascimento = Calendar.getInstance();
-			dataNascimento.setTime(date);
-			return dataNascimento;
+			return date;
 		} catch (ParseException e) {
 			System.out.println("Erro na conversao de data!");
 			return null; // para a execução do método

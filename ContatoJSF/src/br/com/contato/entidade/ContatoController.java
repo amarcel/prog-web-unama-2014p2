@@ -41,6 +41,17 @@ public class ContatoController {
 	public void atualizaContato(){
 		System.out.println("ATUALIZAR CONTATO");
 	}
+	
+	public void acaoTabEditar(Contato c){
+		System.out.println("BOTAO EDITAR!");
+		
+		contato = c;
+	}
+	
+	public void acaoTabRemover(Contato c){
+		System.out.println("BOTAO REMOVER!");
+		System.out.println("Contato: "+c.getNome());
+	}
 
 	
 	/*SETTERs AND GETTERs*/
@@ -60,3 +71,4 @@ public class ContatoController {
 	
 	
 }
+
