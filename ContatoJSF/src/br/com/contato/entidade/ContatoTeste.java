@@ -3,7 +3,6 @@ package br.com.contato.entidade;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 import org.junit.Test;
@@ -13,10 +12,10 @@ public class ContatoTeste {
 	@Test
 	public void deveInserirContato() {
 		Contato c = new Contato();
-		c.setNome("Silvana Silva");
-		c.setEmail("ssilva@gmail.com");
-		c.setEndereco("Rua QWERTY");
-		c.setDataNascimento(deveConverterDataNascimento("10/10/1990"));
+		c.setNome("Roberta");
+		c.setEmail("betinha@yahoo.com.br");
+		c.setEndereco("Rua das Oliveiras");
+		c.setDataNascimento(deveConverterDataNascimento("15/02/1999"));
 
 		ContatoDAO dao = new ContatoDAO();
 
@@ -31,8 +30,6 @@ public class ContatoTeste {
 	}
 
 	private Date deveConverterDataNascimento(String dataString) {
-		Calendar dataNascimento = null;
-
 		// fazendo a conversão da data
 		try {
 			Date date = new SimpleDateFormat("dd/MM/yyyy").parse(dataString);

@@ -1,11 +1,9 @@
 package br.com.contato.entidade;
 
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 public class ContatoDAO {
@@ -61,7 +59,7 @@ public class ContatoDAO {
 			while (resultado.next()) {
 				Contato contato = new Contato();
 				
-				contato.setCodContato(resultado.getString("cliente_id"));
+				contato.setCodContato(resultado.getInt("cliente_id"));
 				contato.setNome(resultado.getString("nome"));
 				contato.setEmail(resultado.getString("email"));
 				contato.setEndereco(resultado.getString("endereco"));
@@ -78,6 +76,47 @@ public class ContatoDAO {
 			return null;
 		}
 		
+	}
+
+	public int excluirContato(Contato c) throws SQLException {
+		try {
+			String sql = "delete from cliente where cliente_id = ?";
+			
+			PreparedStatement ps = bd.getConexao().prepareStatement(sql);
+			
+			ps.setInt(1, c.getCodContato());
+			
+			return ps.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
+
+	public int atualizarContato(Contato contato) throws SQLException{
+		try {
+			String sql = "update cliente "
+					+ "	set nome = ? "
+					+ " ,email = ? "
+					+ " ,endereco = ? "
+					+ " ,data_nascimento = ? "
+					+ "	where cliente_id = ?";
+			
+			PreparedStatement ps = bd.getConexao().prepareStatement(sql);
+			
+			ps.setString(1, contato.getNome());
+			ps.setString(2, contato.getEmail());
+			ps.setString(3, contato.getEndereco());
+			ps.setDate(4, new java.sql.Date( contato.getDataNascimento().getTime() ));
+			ps.setInt(5, contato.getCodContato());
+			
+			return ps.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}
 	}
 	
 	/*

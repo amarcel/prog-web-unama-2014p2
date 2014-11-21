@@ -6,11 +6,11 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class ContatoController {
 
 	//lista para armazenar dados de um select
@@ -27,10 +27,16 @@ public class ContatoController {
 		listaContatos = contato.selecionarContatos();
 	}
 	
+	private void limparCamposTxt(){
+		contato = new Contato();
+	}
+	
 	public void insereContato(){
 		int inseriu = contato.inserirContato(contato);
 		
 		if(inseriu != -1){
+			carregarListaContatos();
+			limparCamposTxt();
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso!", "Contato inserido no Banco de Dados."));
 		}else{
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Falha!", "Contato não foi inserido no Banco de Dados."));
@@ -39,18 +45,36 @@ public class ContatoController {
 	}
 	
 	public void atualizaContato(){
-		System.out.println("ATUALIZAR CONTATO");
+		
+		int atualizou = contato.atualizarContato(contato);
+		
+		if(atualizou != -1){
+			carregarListaContatos();
+			limparCamposTxt();
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso!", "Contato atualizado no Banco de Dados."));
+		}else{
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro!", "Contato não foi atualizado no Banco de Dados."));
+		}
+		
 	}
 	
 	public void acaoTabEditar(Contato c){
-		System.out.println("BOTAO EDITAR!");
-		
+		//simplesmente carrega o objeto da CONTROLLER de nome "cliente"
+		//com o objeto que veio da VIEW de nome "c"
 		contato = c;
 	}
 	
-	public void acaoTabRemover(Contato c){
-		System.out.println("BOTAO REMOVER!");
-		System.out.println("Contato: "+c.getNome());
+	public void acaoTabExcluir(Contato c){
+		
+		int excluiu = contato.excluirContato(c);
+		
+		if(excluiu != -1){
+			carregarListaContatos();
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso!", "Contato excluído do Banco de Dados."));
+		}else{
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro!", "Contato não foi excluído do Banco de Dados."));
+		}
+		
 	}
 
 	

@@ -4,42 +4,46 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
-	
+
 <h:head>
-	<title>
-		<h:outputText value="Cadastro Contatos" />
-	</title>
+	<title><h:outputText value="Cadastro Contatos" /></title>
 </h:head>
 
 <h:body>
 
 	<h:form id="frmContato">
-	
+
+		<!-- MOSTRA AVISOS DE CONFIRMACAO -->
 		<p:messages id="avisos" showDetail="true" autoUpdate="true" closable="true" />
 
-		<p:panelGrid id="pgGerenciaContato" header="Contatos:" columns="2">
-			<p:outputLabel value="Nome:" />
-			<p:inputText value="#{contatoController.contato.nome}" />
-			<p:outputLabel value="E-mail:" />
-			<p:inputText value="#{contatoController.contato.email}" />
-			<p:outputLabel value="Endereço:" />
-			<p:inputText value="#{contatoController.contato.endereco}" />
-			<p:outputLabel for="calendario" value="Nascimento:" /> 
-        	<p:calendar id="calendario" value="#{contatoController.contato.dataNascimento}" />
-			
-			<p:outputLabel value="Ações:"/>
-			<p:panelGrid header="Contatos:" columns="2">
-				<p:commandButton actionListener="#{contatoController.insereContato}" 
-					value="Inserir" />
-				<p:commandButton actionListener="#{contatoController.atualizaContato}" 
-					value="Atualizar" />
-			</p:panelGrid>
-		</p:panelGrid>
-	
-	</h:form>
+		<p:panel id="pnGerenciarContatos" header="Gerenciar Contatos">
+			<p:panelGrid id="pgGerenciaContato" header="Contatos:" columns="2">
+				<p:outputLabel value="Nome:" />
+				<p:inputText value="#{contatoController.contato.nome}" />
+				<p:outputLabel value="E-mail:" />
+				<p:inputText value="#{contatoController.contato.email}" />
+				<p:outputLabel value="Endereço:" />
+				<p:inputText value="#{contatoController.contato.endereco}" />
+				<p:outputLabel for="calendario" value="Nascimento:" />
+				<p:calendar id="calendario"
+					value="#{contatoController.contato.dataNascimento}" />
 
-	<p:panel id="pnListaContatos" header="Lista de contatos cadastrados:">
-		<p:dataTable id="tabListaContatos" 
+				<p:outputLabel value="Ações:" />
+				<p:panelGrid header="Contatos:" columns="2">
+					<p:commandButton
+						actionListener="#{contatoController.insereContato}"
+						update=":frmContato:tabListaContatos" ajax="false"
+						value="Inserir" />
+					<p:commandButton
+						actionListener="#{contatoController.atualizaContato}"
+						update=":frmContato:tabListaContatos" ajax="false"
+						value="Atualizar" />
+				</p:panelGrid>
+			</p:panelGrid>
+		</p:panel>
+
+		<!-- MONTA TABELA DE CONTATOS -->
+		<p:dataTable id="tabListaContatos"
 			value="#{contatoController.listaContatos}" var="contato">
 
 			<p:column headerText="Cód.">
@@ -49,33 +53,38 @@
 			<p:column headerText="Nome">
 				<h:outputText value="#{contato.nome}" />
 			</p:column>
-			
+
 			<p:column headerText="E-mail">
 				<h:outputText value="#{contato.email}" />
 			</p:column>
-			
+
 			<p:column headerText="Endereço">
 				<h:outputText value="#{contato.endereco}" />
 			</p:column>
-			
-			<p:column headerText="Data Nascimento" >
-				<h:outputText value="#{contato.dataNascimento}" >
+
+			<p:column headerText="Data Nascimento">
+				<h:outputText value="#{contato.dataNascimento}">
 					<f:convertDateTime pattern="dd/MM/yyyy" />
 				</h:outputText>
 			</p:column>
-			
+
+			<!-- BOTOES DENTRO DA TABELA DE CONTATOS -->
 			<p:column headerText="Ações">
-				<p:commandButton value="Editar" icon="ui-icon-pencil" update=":frmContato:pgGerenciaContato"
-					actionListener="#{contatoController.acaoTabEditar(contato)}"
-					  />
-				<p:commandButton value="Remover" icon="ui-icon-trash" 
-					actionListener="#{contatoController.acaoTabRemover(contato)}"
-					 />
+				<p:commandButton value="Editar" icon="ui-icon-pencil"
+					update=":frmContato:pgGerenciaContato" ajax="true"
+					actionListener="#{contatoController.acaoTabEditar(contato)}" />
+
+				<!-- exemplo de utilizacao de Javascript com Primefaces (metodo "onclick") -->
+				<p:commandButton value="Excluir" icon="ui-icon-trash"
+					actionListener="#{contatoController.acaoTabExcluir(contato)}"
+					update=":frmContato:tabListaContatos" ajax="false"
+					onclick="var exc = confirm('Confirma exclusão deste contato?'); if (exc == true) { submit(); } else { return false; }" />
 			</p:column>
 
 		</p:dataTable>
-	</p:panel>
-	
-</h:body>	
-	
+		
+	</h:form>
+
+</h:body>
+
 </html>

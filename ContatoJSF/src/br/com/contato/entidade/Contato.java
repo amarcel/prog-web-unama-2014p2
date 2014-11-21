@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Contato {
 
-	private String codContato;
+	private Integer codContato;
 	private String nome;
 	private String email;
 	private String endereco;
@@ -33,7 +33,8 @@ public class Contato {
 		dao = new ContatoDAO();
 		
 		try {
-			List<Contato> listaContatos = new ArrayList<Contato>();
+			List<Contato> listaContatos = 
+					new ArrayList<Contato>();
 			
 			listaContatos = dao.selecionarContatos();
 			
@@ -43,8 +44,37 @@ public class Contato {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	public int excluirContato(Contato c) {
+		dao = new ContatoDAO();
+		
+		int excluiu = -1; 
+		try {
+			excluiu = dao.excluirContato(c);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return excluiu;
 		
 	}
+	
+	public int atualizarContato(Contato contato) {
+		dao = new ContatoDAO();
+		
+		int atualizar = -1; 
+		try {
+			atualizar = dao.atualizarContato(contato);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return atualizar;
+	}
+	
+	
+	/*SETTERS AND GETTERS*/
 	
 	public String getNome() {
 		return nome;
@@ -70,15 +100,11 @@ public class Contato {
 	public void setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
-	public String getCodContato() {
+	public Integer getCodContato() {
 		return codContato;
 	}
-	public void setCodContato(String codContato) {
+	public void setCodContato(Integer codContato) {
 		this.codContato = codContato;
 	}
 
-	
-	
-	
-	
 }
